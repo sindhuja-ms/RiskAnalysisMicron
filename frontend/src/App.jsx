@@ -5,7 +5,7 @@ import {
   Terminal, BookOpen, Download, AlertTriangle, Clock, Database,
   CheckCircle2, Layers, MapPin, Zap, RefreshCw, ChevronRight,
   Users, AlertOctagon, CheckCircle, ArrowUpRight,
-  BarChart3, Award, Timer, Menu, X
+  BarChart3, Award, Timer, Menu, X, Shield
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "/api";
@@ -36,7 +36,7 @@ function FormattedMessage({ text = "" }) {
           const bulletContent = trimmed.substring(2);
           return (
             <div key={idx} className="flex items-start gap-2 ml-1 text-slate-300">
-              <span className="text-fab-amber mt-1 shrink-0">•</span>
+              <span className="text-aura-iris mt-1 shrink-0">•</span>
               <span dangerouslySetInnerHTML={{ __html: parseBold(bulletContent) }} />
             </div>
           );
@@ -53,7 +53,7 @@ function FormattedMessage({ text = "" }) {
 function parseBold(str) {
   return str
     .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em class="text-fab-gold">$1</em>');
+    .replace(/\*(.*?)\*/g, '<em class="text-aura-iris font-medium">$1</em>');
 }
 
 // -----------------------------------------------------------------------------
@@ -64,45 +64,45 @@ function SpeedometerGauge({ value = 0, inherent = 92 }) {
   const angle = percentage * 180 - 180;
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-fab-surface/90 border border-fab-border rounded-xl shadow-xl relative overflow-hidden backdrop-blur w-full">
+    <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-aura-surface/90 border border-aura-border rounded-xl shadow-xl relative overflow-hidden backdrop-blur w-full">
       <div className="relative w-56 sm:w-64 h-28 sm:h-32 overflow-hidden flex items-end justify-center">
         <svg className="w-52 sm:w-60 h-52 sm:h-60 -rotate-90" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#263044" strokeWidth="12" />
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#23273A" strokeWidth="12" />
           <circle
             cx="50" cy="50" r="40" fill="none"
-            stroke="url(#amberGrad)"
+            stroke="url(#violetGrad)"
             strokeWidth="12"
             strokeDasharray="125.6 188.4"
             strokeDashoffset="0"
           />
           <defs>
-            <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="violetGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#10B981" />
-              <stop offset="50%" stopColor="#F59E0B" />
-              <stop offset="100%" stopColor="#F43F5E" />
+              <stop offset="50%" stopColor="#7C3AED" />
+              <stop offset="100%" stopColor="#EF4444" />
             </linearGradient>
           </defs>
         </svg>
 
         <div
-          className="absolute bottom-0 left-1/2 w-1.5 h-20 sm:h-24 bg-fab-amber origin-bottom transition-transform duration-700 ease-out shadow-[0_0_12px_#F59E0B]"
+          className="absolute bottom-0 left-1/2 w-1.5 h-20 sm:h-24 bg-aura-iris origin-bottom transition-transform duration-700 ease-out shadow-[0_0_12px_#7C3AED]"
           style={{ transform: `translateX(-50%) rotate(${angle}deg)` }}
         />
-        <div className="absolute bottom-0 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full border-4 border-fab-surface z-10 shadow" />
+        <div className="absolute bottom-0 w-4 sm:w-5 h-4 sm:h-5 bg-white rounded-full border-4 border-aura-surface z-10 shadow" />
       </div>
 
       <div className="flex justify-between w-full px-4 sm:px-6 text-[10px] font-mono text-slate-400 mt-3 font-semibold">
-        <span className="text-fab-emerald">0.0 SAFE</span>
-        <span className="text-fab-amber">30.0 CAP</span>
-        <span className="text-fab-crimson">100.0 CRITICAL</span>
+        <span className="text-aura-emerald">0.0 SAFE</span>
+        <span className="text-aura-iris">30.0 CAP</span>
+        <span className="text-aura-crimson">100.0 CRITICAL</span>
       </div>
 
-      <div className="mt-4 flex items-center gap-4 sm:gap-6 pt-3 border-t border-fab-border w-full justify-center">
+      <div className="mt-4 flex items-center gap-4 sm:gap-6 pt-3 border-t border-aura-border w-full justify-center">
         <div className="text-center">
           <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Inherent Risk</span>
-          <span className="font-mono text-base sm:text-lg font-bold text-fab-crimson">{inherent.toFixed(1)}</span>
+          <span className="font-mono text-base sm:text-lg font-bold text-aura-crimson">{inherent.toFixed(1)}</span>
         </div>
-        <div className="h-6 w-px bg-fab-border" />
+        <div className="h-6 w-px bg-aura-border" />
         <div className="text-center">
           <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Residual Risk</span>
           <span className="font-mono text-xl sm:text-2xl font-black text-white">{value.toFixed(1)}</span>
@@ -113,7 +113,7 @@ function SpeedometerGauge({ value = 0, inherent = 92 }) {
 }
 
 // -----------------------------------------------------------------------------
-// Cleanroom Topology Map
+// Topology Visualizer
 // -----------------------------------------------------------------------------
 function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
   const plants = [
@@ -123,22 +123,22 @@ function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
   ];
 
   return (
-    <div className="p-4 sm:p-5 bg-fab-surface/90 border border-fab-border rounded-xl shadow-lg w-full">
+    <div className="p-4 sm:p-5 bg-aura-surface/90 border border-aura-border rounded-xl shadow-lg w-full">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-fab-amber" /> Plant Jurisdictional Perimeter
+          <MapPin className="w-4 h-4 text-aura-iris" /> Plant Jurisdictional Perimeter
         </span>
-        <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold self-start sm:self-auto ${hasDeficiency ? 'bg-fab-crimson/20 text-fab-crimson border-fab-crimson/40' : 'bg-fab-emerald/10 text-fab-emerald border-fab-emerald/30'
+        <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold self-start sm:self-auto ${hasDeficiency ? 'bg-aura-crimson/20 text-aura-crimson border-aura-crimson/40' : 'bg-aura-emerald/10 text-aura-emerald border-aura-emerald/30'
           }`}>
           {hasDeficiency ? 'PERIMETER BREACH' : 'CONTAINMENT INTACT'}
         </span>
       </div>
 
       <div className="overflow-x-auto">
-        <svg className="min-w-[320px] w-full h-32 sm:h-36 bg-fab-obsidian/90 rounded-lg border border-fab-border" viewBox="0 0 360 110">
-          <line x1="0" y1="55" x2="360" y2="55" stroke="#263044" strokeDasharray="4 4" />
-          <line x1="120" y1="0" x2="120" y2="110" stroke="#263044" strokeWidth="1.5" />
-          <line x1="240" y1="0" x2="240" y2="110" stroke="#263044" strokeWidth="1.5" />
+        <svg className="min-w-[320px] w-full h-32 sm:h-36 bg-aura-bg/90 rounded-lg border border-aura-border" viewBox="0 0 360 110">
+          <line x1="0" y1="55" x2="360" y2="55" stroke="#23273A" strokeDasharray="4 4" />
+          <line x1="120" y1="0" x2="120" y2="110" stroke="#23273A" strokeWidth="1.5" />
+          <line x1="240" y1="0" x2="240" y2="110" stroke="#23273A" strokeWidth="1.5" />
 
           {plants.map((p) => {
             const isSelected = activePlant === p.id;
@@ -147,16 +147,16 @@ function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
             return (
               <g key={p.id} className="cursor-pointer">
                 {isSelected && (
-                  <circle cx={p.cx} cy={p.cy} r="24" fill="#F59E0B" fillOpacity="0.2" className="animate-pulse" />
+                  <circle cx={p.cx} cy={p.cy} r="24" fill="#7C3AED" fillOpacity="0.25" className="animate-pulse" />
                 )}
                 {isCrossPlantViolation && (
-                  <circle cx={p.cx} cy={p.cy} r="26" fill="#F43F5E" fillOpacity="0.25" className="animate-ping" />
+                  <circle cx={p.cx} cy={p.cy} r="26" fill="#EF4444" fillOpacity="0.25" className="animate-ping" />
                 )}
 
                 <circle
                   cx={p.cx} cy={p.cy} r="15"
-                  fill={isCrossPlantViolation ? "#F43F5E" : isSelected ? "#F59E0B" : "#121824"}
-                  stroke={isCrossPlantViolation ? "#FB7185" : isSelected ? "#FBBF24" : "#263044"}
+                  fill={isCrossPlantViolation ? "#EF4444" : isSelected ? "#7C3AED" : "#12141F"}
+                  stroke={isCrossPlantViolation ? "#F87171" : isSelected ? "#A78BFA" : "#23273A"}
                   strokeWidth="3"
                 />
                 <text x={p.cx} y={p.cy + 4} textAnchor="middle" fill="#FFFFFF" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">
@@ -172,7 +172,7 @@ function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
       </div>
       <div className="flex flex-col sm:flex-row justify-between text-[10px] font-mono text-slate-400 mt-2 gap-1 px-1">
         <span>Assigned Base: <strong className="text-white">{activePlant}</strong></span>
-        <span>Target Execution: <strong className={hasDeficiency ? "text-fab-crimson" : "text-fab-amber"}>{scope}</strong></span>
+        <span>Target Execution: <strong className={hasDeficiency ? "text-aura-crimson" : "text-aura-iris"}>{scope}</strong></span>
       </div>
     </div>
   );
@@ -197,24 +197,24 @@ function ActionTierSelector({ selectedAction, onSelect }) {
             key={t.code}
             onClick={() => onSelect(t.code)}
             className={`p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between ${active
-                ? 'bg-fab-amber/15 border-fab-amber shadow-[0_0_15px_rgba(245,158,11,0.2)]'
-                : 'bg-fab-surface/80 border-fab-border hover:border-slate-600'
+                ? 'bg-aura-violet/20 border-aura-violet shadow-[0_0_20px_rgba(124,58,237,0.25)]'
+                : 'bg-aura-surface/80 border-aura-border hover:border-slate-600'
               }`}
           >
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className={`text-xs font-mono font-bold ${active ? 'text-fab-gold' : 'text-slate-300'}`}>
+                <span className={`text-xs font-mono font-bold ${active ? 'text-aura-iris' : 'text-slate-300'}`}>
                   {t.code}
                 </span>
-                <span className="text-[10px] font-mono font-bold bg-fab-obsidian px-2 py-0.5 rounded text-white border border-fab-border">
+                <span className="text-[10px] font-mono font-bold bg-aura-bg px-2 py-0.5 rounded text-white border border-aura-border">
                   {t.mult}
                 </span>
               </div>
               <div className="text-xs font-semibold text-white mb-1">{t.label}</div>
               <div className="text-[10px] text-slate-400 leading-tight">{t.desc}</div>
             </div>
-            <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-fab-amber font-semibold">
-              {active ? <CheckCircle2 className="w-3.5 h-3.5 text-fab-emerald" /> : <div className="w-3.5 h-3.5 rounded-full border border-slate-600" />}
+            <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-aura-iris font-semibold">
+              {active ? <CheckCircle2 className="w-3.5 h-3.5 text-aura-emerald" /> : <div className="w-3.5 h-3.5 rounded-full border border-slate-600" />}
               <span>{active ? 'Active Policy' : 'Select Tier'}</span>
             </div>
           </div>
@@ -229,91 +229,91 @@ function ActionTierSelector({ selectedAction, onSelect }) {
 // -----------------------------------------------------------------------------
 function ExecutiveKpiRail({ facility }) {
   return (
-    <div className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-fab-border bg-fab-surface/70 p-4 sm:p-6 space-y-5 flex flex-col justify-between backdrop-blur shrink-0">
+    <div className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-aura-border bg-aura-surface/70 p-4 sm:p-6 space-y-5 flex flex-col justify-between backdrop-blur shrink-0">
       <div className="space-y-5">
-        <div className="flex items-center justify-between border-b border-fab-border pb-3">
+        <div className="flex items-center justify-between border-b border-aura-border pb-3">
           <div className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-fab-amber" />
+            <BarChart3 className="w-4 h-4 text-aura-iris" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-white">Fab Executive KPIs</h3>
           </div>
-          <span className="text-[9px] font-mono bg-fab-emerald/20 text-fab-emerald border border-fab-emerald/40 px-2 py-0.5 rounded-full font-bold">
+          <span className="text-[9px] font-mono bg-aura-emerald/20 text-aura-emerald border border-aura-emerald/40 px-2 py-0.5 rounded-full font-bold">
             REAL-TIME
           </span>
         </div>
 
         {/* Metric 1: Health */}
-        <div className="p-4 rounded-xl border bg-fab-obsidian border-fab-amber/40 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+        <div className="p-4 rounded-xl border bg-aura-bg border-aura-violet/40 shadow-[0_0_15px_rgba(124,58,237,0.15)]">
           <div className="flex justify-between items-start mb-1">
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Compliance Health</span>
-            <Award className="w-4 h-4 text-fab-emerald" />
+            <Award className="w-4 h-4 text-aura-emerald" />
           </div>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">99.4%</span>
-            <span className="text-xs text-fab-emerald font-bold flex items-center gap-0.5">+1.2%</span>
+            <span className="text-xs text-aura-emerald font-bold flex items-center gap-0.5">+1.2%</span>
           </div>
-          <div className="w-full bg-fab-surface h-1.5 rounded-full mt-3 overflow-hidden">
-            <div className="bg-gradient-to-r from-fab-amber to-fab-emerald h-full w-[99.4%]" />
+          <div className="w-full bg-aura-surface h-1.5 rounded-full mt-3 overflow-hidden">
+            <div className="bg-gradient-to-r from-aura-violet to-aura-emerald h-full w-[99.4%]" />
           </div>
           <div className="flex justify-between text-[9px] font-mono text-slate-500 mt-1.5">
             <span>Target: 98.0%</span>
-            <span className="text-fab-emerald font-bold">Cleared</span>
+            <span className="text-aura-emerald font-bold">Cleared</span>
           </div>
         </div>
 
         {/* Metric 2 & 3: Grid */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-3.5 rounded-xl bg-fab-obsidian/80 border border-fab-border">
+          <div className="p-3.5 rounded-xl bg-aura-bg/80 border border-aura-border">
             <div className="flex justify-between items-center mb-1">
               <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Hard SoD Blocked</span>
-              <AlertOctagon className="w-3.5 h-3.5 text-fab-crimson" />
+              <AlertOctagon className="w-3.5 h-3.5 text-aura-crimson" />
             </div>
-            <div className="text-xl sm:text-2xl font-black font-mono text-fab-crimson mt-0.5">38</div>
+            <div className="text-xl sm:text-2xl font-black font-mono text-aura-crimson mt-0.5">38</div>
             <span className="text-[9px] text-slate-400 font-mono">Past 24 hours</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-fab-obsidian/80 border border-fab-border">
+          <div className="p-3.5 rounded-xl bg-aura-bg/80 border border-aura-border">
             <div className="flex justify-between items-center mb-1">
               <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Engine Latency</span>
-              <Timer className="w-3.5 h-3.5 text-fab-emerald" />
+              <Timer className="w-3.5 h-3.5 text-aura-emerald" />
             </div>
-            <div className="text-xl sm:text-2xl font-black font-mono text-fab-emerald mt-0.5">8.4ms</div>
+            <div className="text-xl sm:text-2xl font-black font-mono text-aura-emerald mt-0.5">8.4ms</div>
             <span className="text-[9px] text-slate-400 font-mono">Deterministic</span>
           </div>
         </div>
 
         {/* Shift Identity Pool */}
-        <div className="p-4 rounded-xl bg-fab-obsidian/60 border border-fab-border space-y-2.5">
+        <div className="p-4 rounded-xl bg-aura-bg/60 border border-aura-border space-y-2.5">
           <div className="text-[10px] font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
-            <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-fab-amber" /> Shift Pool</span>
+            <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-aura-iris" /> Shift Pool</span>
             <span className="text-xs font-mono font-bold text-white">1,482</span>
           </div>
 
           <div className="space-y-1.5 text-xs font-mono">
             <div className="flex justify-between items-center text-[10px]">
               <span className="text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-fab-emerald" /> Compliant:
+                <span className="w-1.5 h-1.5 rounded-full bg-aura-emerald" /> Compliant:
               </span>
               <span className="text-white font-bold">1,424</span>
             </div>
             <div className="flex justify-between items-center text-[10px]">
               <span className="text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-fab-amber" /> Mitigated (View):
+                <span className="w-1.5 h-1.5 rounded-full bg-aura-iris" /> Mitigated (View):
               </span>
-              <span className="text-fab-gold font-bold">46</span>
+              <span className="text-aura-iris font-bold">46</span>
             </div>
             <div className="flex justify-between items-center text-[10px]">
               <span className="text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-fab-crimson" /> Flagged Breaches:
+                <span className="w-1.5 h-1.5 rounded-full bg-aura-crimson" /> Flagged Breaches:
               </span>
-              <span className="text-fab-crimson font-bold">12</span>
+              <span className="text-aura-crimson font-bold">12</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="pt-4 border-t border-fab-border text-[10px] font-mono text-slate-400 flex items-center justify-between">
+      <div className="pt-4 border-t border-aura-border text-[10px] font-mono text-slate-400 flex items-center justify-between">
         <span>Site: <strong className="text-white">{facility.split(" ")[0]}</strong></span>
-        <span className="text-fab-emerald font-bold flex items-center gap-1">
+        <span className="text-aura-emerald font-bold flex items-center gap-1">
           <CheckCircle className="w-3 h-3" /> Zero Drift
         </span>
       </div>
@@ -427,55 +427,47 @@ export default function App() {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-fab-obsidian text-slate-100 font-sans">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-aura-bg text-slate-100 font-sans">
 
       {/* Mobile Top Navigation Bar */}
-      <div className="lg:hidden flex items-center justify-between p-4 bg-fab-surface border-b border-fab-border sticky top-0 z-50">
+      <div className="lg:hidden flex items-center justify-between p-4 bg-aura-surface border-b border-aura-border sticky top-0 z-50">
         <div className="flex items-center gap-2.5">
-          <div className="bg-gradient-to-tr from-fab-amber to-fab-gold p-2 rounded-lg">
-            <Cpu className="text-fab-obsidian h-5 w-5 stroke-[2.5]" />
+          <div className="bg-gradient-to-tr from-aura-violet to-aura-iris p-2 rounded-lg shadow-[0_0_12px_rgba(124,58,237,0.4)]">
+            <Shield className="text-white h-5 w-5 stroke-[2.2]" />
           </div>
-          <span className="font-extrabold text-sm tracking-wider uppercase text-white font-mono">AURA</span>
+          <span className="font-extrabold text-sm tracking-widest uppercase text-white font-mono">AURA</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 rounded-lg bg-fab-obsidian border border-fab-border text-fab-amber"
+          className="p-2 rounded-lg bg-aura-bg border border-aura-border text-aura-iris"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* Sidebar */}
+      {/* Sidebar (Branding removed) */}
       <aside className={`
         ${mobileMenuOpen ? 'block' : 'hidden'} lg:flex
-        w-full lg:w-64 bg-fab-surface/95 border-b lg:border-b-0 lg:border-r border-fab-border p-5 flex-col justify-between shadow-2xl backdrop-blur shrink-0 z-40
+        w-full lg:w-64 bg-aura-surface/95 border-b lg:border-b-0 lg:border-r border-aura-border p-5 flex-col justify-between shadow-2xl backdrop-blur shrink-0 z-40
       `}>
         <div>
-          <div className="hidden lg:flex items-center gap-3 mb-6">
-            <div className="bg-gradient-to-tr from-fab-amber to-fab-gold p-2.5 rounded-xl shadow-[0_0_15px_rgba(245,158,11,0.35)]">
-              <Cpu className="text-fab-obsidian h-6 w-6 stroke-[2.5]" />
-            </div>
-            <div>
-              <h1 className="font-extrabold text-base tracking-wider uppercase text-white font-mono">MICRON</h1>
-              <p className="text-[10px] uppercase tracking-widest text-fab-amber font-bold">Sentinel Foundry</p>
-            </div>
-          </div>
-
+          {/* Plant Dropdown */}
           <div className="mb-6">
             <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider flex items-center gap-1.5 mb-1.5">
-              <Layers className="w-3 h-3 text-fab-amber" /> Active Cleanroom Fab
+              <Layers className="w-3 h-3 text-aura-iris" /> Active Cleanroom Fab
             </label>
             <select
               value={facility}
               onChange={(e) => setFacility(e.target.value)}
-              className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-2.5 py-2 text-xs text-fab-gold font-mono focus:outline-none focus:border-fab-amber"
+              className="w-full bg-aura-bg border border-aura-border rounded-lg px-2.5 py-2 text-xs text-aura-iris font-mono focus:outline-none focus:border-aura-violet"
             >
-              <option value="Fab 1 — Cleanroom Core (Boise)" className="bg-fab-surface text-white">Fab 1 — Boise</option>
-              <option value="Fab 2 — Packaging & Test (Taichung)" className="bg-fab-surface text-white">Fab 2 — Taichung</option>
-              <option value="Fab 4 — Advanced R&D (Singapore)" className="bg-fab-surface text-white">Fab 4 — Singapore</option>
+              <option value="Fab 1 — Cleanroom Core (Boise)" className="bg-aura-surface text-white">Fab 1 — Boise</option>
+              <option value="Fab 2 — Packaging & Test (Taichung)" className="bg-aura-surface text-white">Fab 2 — Taichung</option>
+              <option value="Fab 4 — Advanced R&D (Singapore)" className="bg-aura-surface text-white">Fab 4 — Singapore</option>
             </select>
           </div>
 
+          {/* Navigation Items */}
           <nav className="space-y-1.5">
             {navItems.map(tab => {
               const Icon = tab.icon;
@@ -488,11 +480,11 @@ export default function App() {
                     setMobileMenuOpen(false);
                   }}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${active
-                      ? 'bg-fab-amber/20 text-fab-gold shadow-[0_0_15px_rgba(245,158,11,0.2)] border-l-4 border-fab-amber font-bold'
-                      : 'text-slate-400 hover:bg-fab-obsidian hover:text-white'
+                      ? 'bg-aura-violet/20 text-aura-iris shadow-[0_0_15px_rgba(124,58,237,0.25)] border-l-4 border-aura-violet font-bold'
+                      : 'text-slate-400 hover:bg-aura-bg hover:text-white'
                     }`}
                 >
-                  <Icon className={`h-4 w-4 ${active ? 'text-fab-amber' : 'text-slate-500'}`} />
+                  <Icon className={`h-4 w-4 ${active ? 'text-aura-iris' : 'text-slate-500'}`} />
                   {tab.label}
                 </button>
               );
@@ -500,25 +492,34 @@ export default function App() {
           </nav>
         </div>
 
-        <div className="hidden lg:block border-t border-fab-border pt-4 font-mono text-[10px] text-slate-400 space-y-1.5">
+        <div className="hidden lg:block border-t border-aura-border pt-4 font-mono text-[10px] text-slate-400 space-y-1.5">
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-fab-emerald animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-aura-emerald animate-ping" />
             <span className="text-white font-bold">ZERO DRIFT ENGINE</span>
           </div>
           <div className="text-slate-500">SOX 404 &bull; ISA-95 VERIFIED</div>
         </div>
       </aside>
 
-      {/* Main Operations Canvas */}
+      {/* Main Canvas */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="bg-fab-surface/90 border-b border-fab-border px-4 sm:px-8 py-5 text-center backdrop-blur">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-widest font-mono">
-            AURA
-          </h1>
-          <p className="text-xs sm:text-sm text-fab-amber font-mono tracking-wider font-semibold mt-1">
+        {/* Centered AURA with Graphic Emblem */}
+        <header className="bg-aura-surface/90 border-b border-aura-border px-4 sm:px-8 py-5 text-center backdrop-blur">
+          <div className="flex items-center justify-center gap-3.5">
+            <div className="relative flex items-center justify-center">
+              <div className="absolute w-10 h-10 bg-aura-violet/40 rounded-full blur-md" />
+              <div className="relative p-2.5 bg-gradient-to-tr from-aura-violet to-aura-iris rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.5)] border border-aura-iris/30">
+                <Shield className="w-6 h-6 text-white stroke-[2.2]" />
+              </div>
+            </div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-widest font-mono drop-shadow-[0_0_25px_rgba(124,58,237,0.4)]">
+              AURA
+            </h1>
+          </div>
+          <p className="text-xs sm:text-sm text-aura-iris font-mono tracking-wider font-semibold mt-1.5">
             Agentic User Risk Analysis
           </p>
-          <p className="text-[11px] text-slate-400 font-mono mt-1">
+          <p className="text-[11px] text-slate-400 font-mono mt-0.5">
             Active Scope: <span className="text-white font-semibold">{facility}</span>
           </p>
         </header>
@@ -528,10 +529,10 @@ export default function App() {
           {activeTab === 'copilot' && (
             <div className="space-y-6">
               {/* Only 3 Exemplary Demo Scenarios Displayed */}
-              <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-5 shadow">
-                <div className="mb-3 border-b border-fab-border pb-2.5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-fab-amber flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-fab-amber" /> Example Demonstration Scenarios (Click to Run)
+              <div className="bg-aura-surface/90 border border-aura-border rounded-xl p-4 sm:p-5 shadow">
+                <div className="mb-3 border-b border-aura-border pb-2.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-aura-iris flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-aura-iris" /> Example Demonstration Scenarios (Click to Run)
                   </h3>
                 </div>
 
@@ -544,11 +545,11 @@ export default function App() {
                     <button
                       key={idx}
                       onClick={() => handleChat(item.q)}
-                      className="p-3 rounded-lg bg-fab-obsidian border border-fab-border hover:border-fab-amber hover:shadow-[0_0_15px_rgba(245,158,11,0.2)] text-left transition flex flex-col justify-between group"
+                      className="p-3 rounded-lg bg-aura-bg border border-aura-border hover:border-aura-violet hover:shadow-[0_0_15px_rgba(124,58,237,0.25)] text-left transition flex flex-col justify-between group"
                     >
-                      <div className="text-[11px] font-bold text-white group-hover:text-fab-gold flex items-center justify-between mb-1">
+                      <div className="text-[11px] font-bold text-white group-hover:text-aura-iris flex items-center justify-between mb-1">
                         <span>{item.label}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-fab-amber" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-aura-iris" />
                       </div>
                       <p className="text-[10px] text-slate-400 truncate">{item.q}</p>
                     </button>
@@ -564,24 +565,24 @@ export default function App() {
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleChat()}
                   placeholder="Type any of your evaluation questions here..."
-                  className="flex-1 bg-fab-surface/90 border border-fab-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-fab-amber text-white placeholder-slate-500 shadow-inner"
+                  className="flex-1 bg-aura-surface/90 border border-aura-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-aura-violet text-white placeholder-slate-500 shadow-inner"
                 />
                 <button
                   onClick={() => handleChat()}
                   disabled={loading}
-                  className="bg-gradient-to-r from-fab-amber to-fab-gold hover:opacity-95 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-fab-obsidian shrink-0 font-mono"
+                  className="bg-gradient-to-r from-aura-violet to-aura-iris hover:opacity-95 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-white shrink-0 font-mono shadow-[0_0_15px_rgba(124,58,237,0.4)]"
                 >
-                  {loading ? <RefreshCw className="w-4 h-4 animate-spin text-fab-obsidian" /> : <Sparkles className="w-4 h-4 text-fab-obsidian" />}
+                  {loading ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <Sparkles className="w-4 h-4 text-white" />}
                   {loading ? 'Evaluating...' : 'Query Copilot'}
                 </button>
               </div>
 
               {/* Formatted Audit Response Card */}
               {chatResponse && (
-                <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-5 sm:p-6 space-y-4 shadow-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-fab-border pb-3">
+                <div className="bg-aura-surface/90 border border-aura-border rounded-xl p-5 sm:p-6 space-y-4 shadow-xl">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-aura-border pb-3">
                     <div className="flex items-center gap-2">
-                      <Terminal className="h-4 w-4 text-fab-amber shrink-0" />
+                      <Terminal className="h-4 w-4 text-aura-iris shrink-0" />
                       <span className="font-mono text-xs text-slate-400 font-semibold truncate">
                         {chatResponse.query}
                       </span>
@@ -589,19 +590,19 @@ export default function App() {
 
                     {chatResponse.verdict && (
                       <span className={`self-start sm:self-auto text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold ${chatResponse.verdict_type === 'danger'
-                          ? 'bg-fab-crimson/20 text-fab-crimson border-fab-crimson/40'
+                          ? 'bg-aura-crimson/20 text-aura-crimson border-aura-crimson/40'
                           : chatResponse.verdict_type === 'warning'
-                            ? 'bg-fab-amber/20 text-fab-amber border-fab-amber/40'
-                            : 'bg-fab-emerald/20 text-fab-emerald border-fab-emerald/40'
+                            ? 'bg-aura-violet/25 text-aura-iris border-aura-iris/40'
+                            : 'bg-aura-emerald/20 text-aura-emerald border-aura-emerald/40'
                         }`}>
                         {chatResponse.verdict}
                       </span>
                     )}
                   </div>
 
-                  <div className="bg-fab-obsidian/90 border border-fab-border rounded-lg p-4 sm:p-5">
+                  <div className="bg-aura-bg/90 border border-aura-border rounded-lg p-4 sm:p-5">
                     {chatResponse.title && (
-                      <h3 className="text-sm font-bold text-fab-gold font-mono uppercase tracking-wider mb-3">
+                      <h3 className="text-sm font-bold text-aura-iris font-mono uppercase tracking-wider mb-3">
                         {chatResponse.title}
                       </h3>
                     )}
@@ -615,7 +616,7 @@ export default function App() {
           {/* TAB 2: ACCESS SIMULATOR */}
           {activeTab === 'simulator' && simResult && (
             <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-fab-surface/90 border border-fab-border p-4 sm:p-5 rounded-xl shadow">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-aura-surface/90 border border-aura-border p-4 sm:p-5 rounded-xl shadow">
                 <div>
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-300 block mb-2">
                     Primary Baseline Role
@@ -623,9 +624,9 @@ export default function App() {
                   <select
                     value={baseRole}
                     onChange={(e) => setBaseRole(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aura-violet"
                   >
-                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-aura-surface text-white">{r}</option>)}
                   </select>
                 </div>
                 <div>
@@ -635,9 +636,9 @@ export default function App() {
                   <select
                     value={targetRole}
                     onChange={(e) => setTargetRole(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aura-violet"
                   >
-                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-aura-surface text-white">{r}</option>)}
                   </select>
                 </div>
               </div>
@@ -655,31 +656,31 @@ export default function App() {
                   inherent={simResult.inherent_score}
                 />
 
-                <div className="bg-fab-surface/90 border border-fab-border p-5 rounded-xl flex flex-col justify-between shadow">
+                <div className="bg-aura-surface/90 border border-aura-border p-5 rounded-xl flex flex-col justify-between shadow">
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center border-b border-fab-border pb-2">
+                    <div className="flex justify-between items-center border-b border-aura-border pb-2">
                       <span className="text-xs text-slate-400 uppercase font-bold">Rule Reference</span>
-                      <span className="font-mono text-sm font-bold text-fab-amber">{simResult.conflict_id}</span>
+                      <span className="font-mono text-sm font-bold text-aura-iris">{simResult.conflict_id}</span>
                     </div>
-                    <div className="flex justify-between items-center border-b border-fab-border pb-2">
+                    <div className="flex justify-between items-center border-b border-aura-border pb-2">
                       <span className="text-xs text-slate-400 uppercase font-bold">Standard</span>
                       <span className="font-mono text-xs text-white">{simResult.violated_law_id}</span>
                     </div>
                     <div>
                       <span className="text-xs text-slate-400 block mb-1">Identified Exposure:</span>
-                      <p className="text-xs text-slate-200 bg-fab-obsidian p-2.5 rounded border border-fab-border leading-relaxed">
+                      <p className="text-xs text-slate-200 bg-aura-bg p-2.5 rounded border border-aura-border leading-relaxed">
                         {simResult.vulnerability}
                       </p>
                     </div>
                     <div>
                       <span className="text-xs text-slate-400 block mb-1">Audit Directive:</span>
-                      <p className="text-xs text-fab-emerald font-mono bg-fab-obsidian p-2.5 rounded border border-fab-border">
+                      <p className="text-xs text-aura-emerald font-mono bg-aura-bg p-2.5 rounded border border-aura-border">
                         {simResult.remediation}
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-4 bg-fab-obsidian p-3 rounded-lg border border-fab-border font-mono text-[11px] text-fab-gold">
+                  <div className="mt-4 bg-aura-bg p-3 rounded-lg border border-aura-border font-mono text-[11px] text-aura-iris">
                     Proof: {simResult.inherent_score} * ({targetAction === 'ACT_VIEW' ? 0.2 : targetAction === 'ACT_EXEC' ? 1.0 : 2.0} / 2.5) = <strong className="text-white">{simResult.residual_score}</strong>
                   </div>
                 </div>
@@ -690,15 +691,15 @@ export default function App() {
           {/* TAB 3: JURISDICTIONAL AUDIT */}
           {activeTab === 'lifecycle' && (
             <div className="space-y-6">
-              <div className="bg-fab-surface/90 border border-fab-border p-4 sm:p-5 rounded-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 shadow">
+              <div className="bg-aura-surface/90 border border-aura-border p-4 sm:p-5 rounded-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 shadow">
                 <div>
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Role Designation</label>
                   <select
                     value={auditRole}
                     onChange={(e) => setAuditRole(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-aura-violet"
                   >
-                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-aura-surface text-white">{r}</option>)}
                   </select>
                 </div>
                 <div>
@@ -706,11 +707,11 @@ export default function App() {
                   <select
                     value={assignedPlant}
                     onChange={(e) => setAssignedPlant(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-aura-violet"
                   >
-                    <option value="Plant-01" className="bg-fab-surface text-white">Plant-01 (Boise)</option>
-                    <option value="Plant-02" className="bg-fab-surface text-white">Plant-02 (Taichung)</option>
-                    <option value="Plant-04" className="bg-fab-surface text-white">Plant-04 (Singapore)</option>
+                    <option value="Plant-01" className="bg-aura-surface text-white">Plant-01 (Boise)</option>
+                    <option value="Plant-02" className="bg-aura-surface text-white">Plant-02 (Taichung)</option>
+                    <option value="Plant-04" className="bg-aura-surface text-white">Plant-04 (Singapore)</option>
                   </select>
                 </div>
                 <div>
@@ -718,11 +719,11 @@ export default function App() {
                   <select
                     value={requestedScope}
                     onChange={(e) => setRequestedScope(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-aura-violet"
                   >
-                    <option value="GLOBAL" className="bg-fab-surface text-white">GLOBAL / Multi-Plant</option>
-                    <option value="Plant-04" className="bg-fab-surface text-white">Plant-04 (Local Only)</option>
-                    <option value="Plant-01" className="bg-fab-surface text-white">Plant-01 (Local Only)</option>
+                    <option value="GLOBAL" className="bg-aura-surface text-white">GLOBAL / Multi-Plant</option>
+                    <option value="Plant-04" className="bg-aura-surface text-white">Plant-04 (Local Only)</option>
+                    <option value="Plant-01" className="bg-aura-surface text-white">Plant-01 (Local Only)</option>
                   </select>
                 </div>
                 <div>
@@ -731,7 +732,7 @@ export default function App() {
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-aura-violet"
                   />
                 </div>
                 <div>
@@ -740,13 +741,13 @@ export default function App() {
                     type="date"
                     value={reviewDate}
                     onChange={(e) => setReviewDate(e.target.value)}
-                    className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
+                    className="w-full bg-aura-bg border border-aura-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-aura-violet"
                   />
                 </div>
                 <div className="flex items-end">
                   <button
                     onClick={runLifecycleAudit}
-                    className="w-full bg-gradient-to-r from-fab-amber to-fab-gold hover:opacity-95 font-bold text-xs py-2.5 rounded-lg text-fab-obsidian shadow transition"
+                    className="w-full bg-gradient-to-r from-aura-violet to-aura-iris hover:opacity-95 font-bold text-xs py-2.5 rounded-lg text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] transition"
                   >
                     Execute Audit
                   </button>
@@ -762,23 +763,23 @@ export default function App() {
               <div className="space-y-3">
                 {auditFindings.length > 0 ? (
                   auditFindings.map((finding, idx) => (
-                    <div key={idx} className="bg-fab-surface/90 border border-fab-border border-l-4 border-l-fab-crimson rounded-xl p-4 sm:p-5 shadow">
+                    <div key={idx} className="bg-aura-surface/90 border border-aura-border border-l-4 border-l-aura-crimson rounded-xl p-4 sm:p-5 shadow">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono text-xs sm:text-sm font-bold text-fab-crimson">
+                        <span className="font-mono text-xs sm:text-sm font-bold text-aura-crimson">
                           {finding.law_id} DEFICIENCY
                         </span>
-                        <span className="text-[10px] font-mono bg-fab-crimson/20 text-fab-crimson border border-fab-crimson/40 px-2 py-0.5 rounded font-bold">
+                        <span className="text-[10px] font-mono bg-aura-crimson/20 text-aura-crimson border border-aura-crimson/40 px-2 py-0.5 rounded font-bold">
                           NON-CONFORMANT
                         </span>
                       </div>
                       <p className="text-xs text-slate-200 mb-2">{finding.issue}</p>
-                      <p className="text-xs text-fab-emerald font-mono bg-fab-obsidian p-2.5 rounded border border-fab-border">
+                      <p className="text-xs text-aura-emerald font-mono bg-aura-bg p-2.5 rounded border border-aura-border">
                         <strong>Remediation:</strong> {finding.remediation}
                       </p>
                     </div>
                   ))
                 ) : (
-                  <div className="bg-fab-surface/90 border border-fab-border border-l-4 border-l-fab-emerald rounded-xl p-4 sm:p-5 text-fab-emerald text-xs font-mono">
+                  <div className="bg-aura-surface/90 border border-aura-border border-l-4 border-l-aura-emerald rounded-xl p-4 sm:p-5 text-aura-emerald text-xs font-mono">
                     GL-03 / GL-04 CONFORMANCE CONFIRMED: Plant jurisdiction matches physical site boundaries. Expiry date valid.
                   </div>
                 )}
@@ -789,7 +790,7 @@ export default function App() {
           {/* TAB 4: BENCHMARK REGISTER */}
           {activeTab === 'benchmarks' && (
             <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row justify-between sm:items-center bg-fab-surface/90 border border-fab-border p-4 sm:p-5 rounded-xl gap-3 shadow">
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center bg-aura-surface/90 border border-aura-border p-4 sm:p-5 rounded-xl gap-3 shadow">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-300 block">
                     Benchmark Test Suite (Sheet 5: AUD-01 to AUD-08)
@@ -800,38 +801,38 @@ export default function App() {
                 </div>
                 <button
                   onClick={verifyAllBenchmarks}
-                  className="bg-gradient-to-r from-fab-emerald to-emerald-400 hover:opacity-95 text-xs font-bold px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-1.5 text-fab-obsidian shadow shrink-0"
+                  className="bg-gradient-to-r from-aura-emerald to-emerald-400 hover:opacity-95 text-xs font-bold px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-1.5 text-aura-bg shadow shrink-0 font-mono"
                 >
                   <RefreshCw className="h-4 w-4" /> Run Verification
                 </button>
               </div>
 
               {verifiedCount > 0 && (
-                <div className="bg-fab-emerald/10 border border-fab-emerald/40 rounded-xl p-4 text-xs font-mono text-fab-emerald flex items-center justify-between">
+                <div className="bg-aura-emerald/10 border border-aura-emerald/40 rounded-xl p-4 text-xs font-mono text-aura-emerald flex items-center justify-between">
                   <span>Verified: {verifiedCount} / 8 scenarios.</span>
                   <span className="font-bold">{Math.round((verifiedCount / 8) * 100)}% COMPLETE</span>
                 </div>
               )}
 
-              <div className="bg-fab-surface/90 border border-fab-border rounded-xl overflow-x-auto shadow">
+              <div className="bg-aura-surface/90 border border-aura-border rounded-xl overflow-x-auto shadow">
                 <table className="w-full text-left text-xs min-w-[500px]">
-                  <thead className="bg-fab-obsidian border-b border-fab-border text-slate-400 font-mono">
+                  <thead className="bg-aura-bg border-b border-aura-border text-slate-400 font-mono">
                     <tr>
                       <th className="p-3.5 w-24">Case ID</th>
                       <th className="p-3.5">Scenario Specification</th>
                       <th className="p-3.5 w-36 text-right">Deterministic Result</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-fab-border font-mono">
+                  <tbody className="divide-y divide-aura-border font-mono">
                     {benchmarks.map((b, idx) => {
                       const isVerified = verifiedCount > idx;
                       return (
-                        <tr key={idx} className="hover:bg-fab-obsidian/50 transition">
-                          <td className="p-3.5 text-fab-gold font-bold">{b.id || `AUD-0${idx + 1}`}</td>
+                        <tr key={idx} className="hover:bg-aura-bg/50 transition">
+                          <td className="p-3.5 text-aura-iris font-bold">{b.id || `AUD-0${idx + 1}`}</td>
                           <td className="p-3.5 text-slate-300">{b.description}</td>
                           <td className="p-3.5 text-right font-bold">
                             {isVerified ? (
-                              <span className="text-fab-emerald inline-flex items-center gap-1">
+                              <span className="text-aura-emerald inline-flex items-center gap-1">
                                 <CheckCircle2 className="w-3.5 h-3.5" /> MATCH
                               </span>
                             ) : (
@@ -851,19 +852,19 @@ export default function App() {
           {activeTab === 'laws' && (
             <div className="space-y-4">
               {laws.map((law, idx) => (
-                <div key={idx} className="bg-fab-surface/90 border border-fab-border border-l-4 border-l-fab-amber rounded-xl p-4 sm:p-5 shadow">
+                <div key={idx} className="bg-aura-surface/90 border border-aura-border border-l-4 border-l-aura-violet rounded-xl p-4 sm:p-5 shadow">
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-1 mb-2">
-                    <span className="font-mono text-xs sm:text-sm font-bold text-fab-gold">
+                    <span className="font-mono text-xs sm:text-sm font-bold text-aura-iris">
                       {law["Golden Law ID"] || law.id} — {law["Law Name & Principle"] || law.name}
                     </span>
-                    <span className="text-[10px] font-mono bg-fab-obsidian px-2 py-0.5 rounded text-slate-300 border border-fab-border self-start sm:self-auto">
+                    <span className="text-[10px] font-mono bg-aura-bg px-2 py-0.5 rounded text-slate-300 border border-aura-border self-start sm:self-auto">
                       {law["Governing Standard"] || "SOX 404"}
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed mb-3">
                     {law["Auditor Specification & Scope"] || law.description}
                   </p>
-                  <div className="font-mono text-[11px] text-fab-amber">
+                  <div className="font-mono text-[11px] text-aura-iris">
                     Tolerance: {law["Threshold / Tolerance"] || "Zero Tolerance"}
                   </div>
                 </div>

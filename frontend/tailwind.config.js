@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        fab: {
-          obsidian: '#0B0E14',   // Deep Cleanroom Base
-          surface: '#121824',    // Card & Panel Surface
-          card: '#182030',       // Interactive Elevation
-          border: '#263044',     // Substrate Border Lines
-          amber: '#F59E0B',      // Photolithography Yellow/Amber
-          gold: '#FBBF24',       // Warm Accent Gold
-          crimson: '#F43F5E',    // Statutory Conflict Red
-          emerald: '#10B981',    // Cleared / Safe Baseline
+        aura: {
+          bg: '#090A0F',        // Carbon Black
+          surface: '#12141F',   // Deep Titanium Slate
+          card: '#181B2A',      // Elevated Panel
+          border: '#23273A',    // Cold Wireframe Line
+          violet: '#7C3AED',    // Electric Ultraviolet
+          iris: '#A78BFA',      // Soft Periwinkle / Iris
+          crimson: '#EF4444',   // Conflict Hazard
+          emerald: '#10B981',   // Cleared Baseline
         }
       },
       fontFamily: {
