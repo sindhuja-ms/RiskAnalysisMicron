@@ -5,13 +5,13 @@ import {
   Terminal, BookOpen, Download, AlertTriangle, Clock, Database,
   CheckCircle2, Layers, MapPin, Zap, RefreshCw, ChevronRight,
   Users, AlertOctagon, CheckCircle, ArrowUpRight,
-  BarChart3, Award, Timer, Menu, X, Info
+  BarChart3, Award, Timer, Menu, X
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 // -----------------------------------------------------------------------------
-// Formatted Markdown Renderer
+// Markdown & Formatting Renderer
 // -----------------------------------------------------------------------------
 function FormattedMessage({ text = "" }) {
   if (!text) return null;
@@ -24,7 +24,6 @@ function FormattedMessage({ text = "" }) {
         const trimmed = line.trim();
         if (!trimmed) return <div key={idx} className="h-1" />;
 
-        // Header ###
         if (trimmed.startsWith("### ")) {
           return (
             <h4 key={idx} className="text-sm sm:text-base font-extrabold text-white font-mono mt-3 mb-1">
@@ -33,7 +32,6 @@ function FormattedMessage({ text = "" }) {
           );
         }
 
-        // Bullet Point
         if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
           const bulletContent = trimmed.substring(2);
           return (
@@ -44,7 +42,6 @@ function FormattedMessage({ text = "" }) {
           );
         }
 
-        // Standard Paragraph
         return (
           <p key={idx} dangerouslySetInnerHTML={{ __html: parseBold(line) }} />
         );
@@ -60,7 +57,7 @@ function parseBold(str) {
 }
 
 // -----------------------------------------------------------------------------
-// Gauge
+// Speedometer Gauge
 // -----------------------------------------------------------------------------
 function SpeedometerGauge({ value = 0, inherent = 92 }) {
   const percentage = Math.min(Math.max(value / 100, 0), 1);
@@ -116,7 +113,7 @@ function SpeedometerGauge({ value = 0, inherent = 92 }) {
 }
 
 // -----------------------------------------------------------------------------
-// Topology Visualizer
+// Cleanroom Topology Map
 // -----------------------------------------------------------------------------
 function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
   const plants = [
@@ -284,7 +281,7 @@ function ExecutiveKpiRail({ facility }) {
           </div>
         </div>
 
-        {/* Identity Pool */}
+        {/* Shift Identity Pool */}
         <div className="p-4 rounded-xl bg-fab-obsidian/60 border border-fab-border space-y-2.5">
           <div className="text-[10px] font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-fab-amber" /> Shift Pool</span>
@@ -530,34 +527,19 @@ export default function App() {
           {/* TAB 1: COPILOT */}
           {activeTab === 'copilot' && (
             <div className="space-y-6">
-              {/* Evaluator Demonstration Scenarios */}
+              {/* Only 3 Exemplary Demo Scenarios Displayed */}
               <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-5 shadow">
                 <div className="mb-3 border-b border-fab-border pb-2.5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-fab-amber flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-fab-amber" /> Evaluator Demonstration Scenarios (Click to Run)
+                    <Zap className="w-4 h-4 text-fab-amber" /> Example Demonstration Scenarios (Click to Run)
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {[
                     { label: "1. Self-Approval Prevention", q: "Can this Production Operator approve an adjustment that the same user created?" },
                     { label: "2. Cross-Plant Stock Adjustments", q: "Which Warehouse Operators can adjust stock outside their assigned plant?" },
-                    { label: "3. QA Lead Access Classification", q: "Does this Quality Engineer have view-only access or the ability to approve an exception?" },
-                    { label: "4. Maintenance Expiration Check", q: "Which temporary shutdown permissions have expired?" },
-                    { label: "5. Recipe Author vs Release", q: "Can the Master Data Specialist both modify and release a material change?" },
-                    { label: "6. Dormant Account Detection", q: "Which sensitive permissions are unused but still active?" },
-                    { label: "7. Job Baseline Impact", q: "What access can be removed without affecting the approved job baseline?" },
-                    { label: "8. Plant Manager Debrief", q: "Explain this finding to a Plant Manager without technical terminology." },
-                    { label: "9. User U1001 Attribution", q: "Why is User U1001 considered high risk?" },
-                    { label: "10. Out-of-Scope Privileges", q: "Which permissions are beyond the user's approved job responsibility?" },
-                    { label: "11. Real Capability Breakdown", q: "Is the additional access view-only, or can the user create, modify, approve, execute, or administer?" },
-                    { label: "12. Permission Lineage & Origin", q: "Which access group or assignment introduced the permission?" },
-                    { label: "13. Violated Standard Rules", q: "Which conflict or critical-access rule was triggered?" },
-                    { label: "14. Exception Record Validation", q: "Does a valid approval, exception, or mitigating control exist?" },
-                    { label: "15. Least Disruptive Remedy", q: "What is the least disruptive remediation?" },
-                    { label: "16. Group Removal Simulation", q: "What happens to the risk if a specific access group is removed?" },
-                    { label: "17. Fleet Hygiene Audit", q: "Which users have expired, unused, unapproved, or unrestricted access?" },
-                    { label: "18. Dual Executive & Audit Report", q: "Generate a manager review summary and an auditor evidence summary." },
+                    { label: "3. User U1001 Attribution", q: "Why is User U1001 considered high risk?" },
                   ].map((item, idx) => (
                     <button
                       key={idx}
@@ -581,7 +563,7 @@ export default function App() {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleChat()}
-                  placeholder="Type any evaluation question or click a scenario above..."
+                  placeholder="Type any of your evaluation questions here..."
                   className="flex-1 bg-fab-surface/90 border border-fab-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-fab-amber text-white placeholder-slate-500 shadow-inner"
                 />
                 <button
@@ -597,7 +579,6 @@ export default function App() {
               {/* Formatted Audit Response Card */}
               {chatResponse && (
                 <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-5 sm:p-6 space-y-4 shadow-xl">
-                  {/* Query Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-fab-border pb-3">
                     <div className="flex items-center gap-2">
                       <Terminal className="h-4 w-4 text-fab-amber shrink-0" />
@@ -606,7 +587,6 @@ export default function App() {
                       </span>
                     </div>
 
-                    {/* Verdict Tag */}
                     {chatResponse.verdict && (
                       <span className={`self-start sm:self-auto text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold ${chatResponse.verdict_type === 'danger'
                           ? 'bg-fab-crimson/20 text-fab-crimson border-fab-crimson/40'
@@ -619,7 +599,6 @@ export default function App() {
                     )}
                   </div>
 
-                  {/* Clean Formatted Body */}
                   <div className="bg-fab-obsidian/90 border border-fab-border rounded-lg p-4 sm:p-5">
                     {chatResponse.title && (
                       <h3 className="text-sm font-bold text-fab-gold font-mono uppercase tracking-wider mb-3">
@@ -894,7 +873,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* Responsive Right-Hand KPI Rail */}
+      {/* Right Rail */}
       <ExecutiveKpiRail facility={facility} />
     </div>
   );
