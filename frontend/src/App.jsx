@@ -5,13 +5,62 @@ import {
   Terminal, BookOpen, Download, AlertTriangle, Clock, Database,
   CheckCircle2, Layers, MapPin, Zap, RefreshCw, ChevronRight,
   Users, AlertOctagon, CheckCircle, ArrowUpRight,
-  BarChart3, Award, Timer, Menu, X
+  BarChart3, Award, Timer, Menu, X, Info
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 // -----------------------------------------------------------------------------
-// Responsive Speedometer Gauge
+// Formatted Markdown Renderer
+// -----------------------------------------------------------------------------
+function FormattedMessage({ text = "" }) {
+  if (!text) return null;
+
+  const lines = text.split("\n");
+
+  return (
+    <div className="space-y-3 text-slate-200 text-xs sm:text-sm leading-relaxed">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return <div key={idx} className="h-1" />;
+
+        // Header ###
+        if (trimmed.startsWith("### ")) {
+          return (
+            <h4 key={idx} className="text-sm sm:text-base font-extrabold text-white font-mono mt-3 mb-1">
+              {trimmed.replace("### ", "")}
+            </h4>
+          );
+        }
+
+        // Bullet Point
+        if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
+          const bulletContent = trimmed.substring(2);
+          return (
+            <div key={idx} className="flex items-start gap-2 ml-1 text-slate-300">
+              <span className="text-fab-amber mt-1 shrink-0">•</span>
+              <span dangerouslySetInnerHTML={{ __html: parseBold(bulletContent) }} />
+            </div>
+          );
+        }
+
+        // Standard Paragraph
+        return (
+          <p key={idx} dangerouslySetInnerHTML={{ __html: parseBold(line) }} />
+        );
+      })}
+    </div>
+  );
+}
+
+function parseBold(str) {
+  return str
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em class="text-fab-gold">$1</em>');
+}
+
+// -----------------------------------------------------------------------------
+// Gauge
 // -----------------------------------------------------------------------------
 function SpeedometerGauge({ value = 0, inherent = 92 }) {
   const percentage = Math.min(Math.max(value / 100, 0), 1);
@@ -58,7 +107,7 @@ function SpeedometerGauge({ value = 0, inherent = 92 }) {
         </div>
         <div className="h-6 w-px bg-fab-border" />
         <div className="text-center">
-          <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Mitigated Residual</span>
+          <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Residual Risk</span>
           <span className="font-mono text-xl sm:text-2xl font-black text-white">{value.toFixed(1)}</span>
         </div>
       </div>
@@ -67,7 +116,7 @@ function SpeedometerGauge({ value = 0, inherent = 92 }) {
 }
 
 // -----------------------------------------------------------------------------
-// Responsive Cleanroom Topology Visualizer
+// Topology Visualizer
 // -----------------------------------------------------------------------------
 function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
   const plants = [
@@ -84,7 +133,7 @@ function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
         </span>
         <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold self-start sm:self-auto ${hasDeficiency ? 'bg-fab-crimson/20 text-fab-crimson border-fab-crimson/40' : 'bg-fab-emerald/10 text-fab-emerald border-fab-emerald/30'
           }`}>
-          {hasDeficiency ? 'GL-03 PERIMETER BREACH' : 'CONTAINMENT INTACT'}
+          {hasDeficiency ? 'PERIMETER BREACH' : 'CONTAINMENT INTACT'}
         </span>
       </div>
 
@@ -133,7 +182,7 @@ function CleanroomTopologyMap({ activePlant, scope, hasDeficiency }) {
 }
 
 // -----------------------------------------------------------------------------
-// Responsive Action Tier Selector
+// Action Tier Cards
 // -----------------------------------------------------------------------------
 function ActionTierSelector({ selectedAction, onSelect }) {
   const tiers = [
@@ -179,7 +228,7 @@ function ActionTierSelector({ selectedAction, onSelect }) {
 }
 
 // -----------------------------------------------------------------------------
-// Responsive Executive KPI Rail
+// Executive KPI Rail
 // -----------------------------------------------------------------------------
 function ExecutiveKpiRail({ facility }) {
   return (
@@ -195,7 +244,7 @@ function ExecutiveKpiRail({ facility }) {
           </span>
         </div>
 
-        {/* Metric 1: Statutory Compliance Health */}
+        {/* Metric 1: Health */}
         <div className="p-4 rounded-xl border bg-fab-obsidian border-fab-amber/40 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
           <div className="flex justify-between items-start mb-1">
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Compliance Health</span>
@@ -210,11 +259,11 @@ function ExecutiveKpiRail({ facility }) {
           </div>
           <div className="flex justify-between text-[9px] font-mono text-slate-500 mt-1.5">
             <span>Target: 98.0%</span>
-            <span className="text-fab-emerald font-bold">SOX 404 Cleared</span>
+            <span className="text-fab-emerald font-bold">Cleared</span>
           </div>
         </div>
 
-        {/* Metric Grid: Blocked & Latency */}
+        {/* Metric 2 & 3: Grid */}
         <div className="grid grid-cols-2 gap-3">
           <div className="p-3.5 rounded-xl bg-fab-obsidian/80 border border-fab-border">
             <div className="flex justify-between items-center mb-1">
@@ -231,11 +280,11 @@ function ExecutiveKpiRail({ facility }) {
               <Timer className="w-3.5 h-3.5 text-fab-emerald" />
             </div>
             <div className="text-xl sm:text-2xl font-black font-mono text-fab-emerald mt-0.5">8.4ms</div>
-            <span className="text-[9px] text-slate-400 font-mono">Deterministic speed</span>
+            <span className="text-[9px] text-slate-400 font-mono">Deterministic</span>
           </div>
         </div>
 
-        {/* Shift Identity Pool */}
+        {/* Identity Pool */}
         <div className="p-4 rounded-xl bg-fab-obsidian/60 border border-fab-border space-y-2.5">
           <div className="text-[10px] font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-fab-amber" /> Shift Pool</span>
@@ -276,7 +325,7 @@ function ExecutiveKpiRail({ facility }) {
 }
 
 // -----------------------------------------------------------------------------
-// Root Component
+// Root Application
 // -----------------------------------------------------------------------------
 export default function App() {
   const [activeTab, setActiveTab] = useState('copilot');
@@ -405,7 +454,6 @@ export default function App() {
         w-full lg:w-64 bg-fab-surface/95 border-b lg:border-b-0 lg:border-r border-fab-border p-5 flex-col justify-between shadow-2xl backdrop-blur shrink-0 z-40
       `}>
         <div>
-          {/* Desktop Brand Header */}
           <div className="hidden lg:flex items-center gap-3 mb-6">
             <div className="bg-gradient-to-tr from-fab-amber to-fab-gold p-2.5 rounded-xl shadow-[0_0_15px_rgba(245,158,11,0.35)]">
               <Cpu className="text-fab-obsidian h-6 w-6 stroke-[2.5]" />
@@ -416,7 +464,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Plant Dropdown */}
           <div className="mb-6">
             <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider flex items-center gap-1.5 mb-1.5">
               <Layers className="w-3 h-3 text-fab-amber" /> Active Cleanroom Fab
@@ -432,7 +479,6 @@ export default function App() {
             </select>
           </div>
 
-          {/* Navigation Items */}
           <nav className="space-y-1.5">
             {navItems.map(tab => {
               const Icon = tab.icon;
@@ -468,7 +514,6 @@ export default function App() {
 
       {/* Main Operations Canvas */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Updated Header: Big AURA with subtitle, badges removed */}
         <header className="bg-fab-surface/90 border-b border-fab-border px-4 sm:px-8 py-5 text-center backdrop-blur">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-widest font-mono">
             AURA
@@ -485,7 +530,7 @@ export default function App() {
           {/* TAB 1: COPILOT */}
           {activeTab === 'copilot' && (
             <div className="space-y-6">
-              {/* Demonstration Scenarios (18 Pre-certified label removed) */}
+              {/* Evaluator Demonstration Scenarios */}
               <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-5 shadow">
                 <div className="mb-3 border-b border-fab-border pb-2.5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-fab-amber flex items-center gap-2">
@@ -495,15 +540,24 @@ export default function App() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {[
-                    { label: "User U1001 Risk Attribution", q: "Why is User U1001 considered high risk?" },
-                    { label: "Single-User Scrap Sign-off", q: "Can this Production Operator approve an adjustment that the same user created?" },
-                    { label: "Cross-Plant Scope Audit", q: "Which Warehouse Operators can adjust stock outside their assigned plant?" },
-                    { label: "Action-Tier Classification", q: "Is the additional access view-only, or can the user create, modify, approve, execute, or administer?" },
-                    { label: "Temporary Shutdown Expiries", q: "Which temporary shutdown permissions have expired?" },
-                    { label: "Least-Disruptive Remediation", q: "What is the least disruptive remediation?" },
-                    { label: "What-If Removal Modeling", q: "What happens to the risk if a specific access group is removed?" },
-                    { label: "Plant Manager Explanation", q: "Explain this finding to a Plant Manager without technical terminology." },
-                    { label: "Dual Audit Package Generation", q: "Generate a manager review summary and an auditor evidence summary." },
+                    { label: "1. Self-Approval Prevention", q: "Can this Production Operator approve an adjustment that the same user created?" },
+                    { label: "2. Cross-Plant Stock Adjustments", q: "Which Warehouse Operators can adjust stock outside their assigned plant?" },
+                    { label: "3. QA Lead Access Classification", q: "Does this Quality Engineer have view-only access or the ability to approve an exception?" },
+                    { label: "4. Maintenance Expiration Check", q: "Which temporary shutdown permissions have expired?" },
+                    { label: "5. Recipe Author vs Release", q: "Can the Master Data Specialist both modify and release a material change?" },
+                    { label: "6. Dormant Account Detection", q: "Which sensitive permissions are unused but still active?" },
+                    { label: "7. Job Baseline Impact", q: "What access can be removed without affecting the approved job baseline?" },
+                    { label: "8. Plant Manager Debrief", q: "Explain this finding to a Plant Manager without technical terminology." },
+                    { label: "9. User U1001 Attribution", q: "Why is User U1001 considered high risk?" },
+                    { label: "10. Out-of-Scope Privileges", q: "Which permissions are beyond the user's approved job responsibility?" },
+                    { label: "11. Real Capability Breakdown", q: "Is the additional access view-only, or can the user create, modify, approve, execute, or administer?" },
+                    { label: "12. Permission Lineage & Origin", q: "Which access group or assignment introduced the permission?" },
+                    { label: "13. Violated Standard Rules", q: "Which conflict or critical-access rule was triggered?" },
+                    { label: "14. Exception Record Validation", q: "Does a valid approval, exception, or mitigating control exist?" },
+                    { label: "15. Least Disruptive Remedy", q: "What is the least disruptive remediation?" },
+                    { label: "16. Group Removal Simulation", q: "What happens to the risk if a specific access group is removed?" },
+                    { label: "17. Fleet Hygiene Audit", q: "Which users have expired, unused, unapproved, or unrestricted access?" },
+                    { label: "18. Dual Executive & Audit Report", q: "Generate a manager review summary and an auditor evidence summary." },
                   ].map((item, idx) => (
                     <button
                       key={idx}
@@ -520,14 +574,14 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Natural Language Prompt Input Bar */}
+              {/* Search Bar */}
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleChat()}
-                  placeholder="Ask any question from the evaluation sheets..."
+                  placeholder="Type any evaluation question or click a scenario above..."
                   className="flex-1 bg-fab-surface/90 border border-fab-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-fab-amber text-white placeholder-slate-500 shadow-inner"
                 />
                 <button
@@ -540,41 +594,39 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Chat Response */}
+              {/* Formatted Audit Response Card */}
               {chatResponse && (
-                <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-6 space-y-4 shadow-xl">
-                  <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-fab-border pb-3">
-                    <div className="flex items-center gap-2 truncate">
+                <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-5 sm:p-6 space-y-4 shadow-xl">
+                  {/* Query Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-fab-border pb-3">
+                    <div className="flex items-center gap-2">
                       <Terminal className="h-4 w-4 text-fab-amber shrink-0" />
-                      <span className="truncate">{chatResponse.query}</span>
+                      <span className="font-mono text-xs text-slate-400 font-semibold truncate">
+                        {chatResponse.query}
+                      </span>
                     </div>
+
+                    {/* Verdict Tag */}
+                    {chatResponse.verdict && (
+                      <span className={`self-start sm:self-auto text-[10px] font-mono px-2.5 py-0.5 rounded border font-bold ${chatResponse.verdict_type === 'danger'
+                          ? 'bg-fab-crimson/20 text-fab-crimson border-fab-crimson/40'
+                          : chatResponse.verdict_type === 'warning'
+                            ? 'bg-fab-amber/20 text-fab-amber border-fab-amber/40'
+                            : 'bg-fab-emerald/20 text-fab-emerald border-fab-emerald/40'
+                        }`}>
+                        {chatResponse.verdict}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="bg-fab-obsidian/80 border border-fab-border rounded-lg p-4 text-sm text-slate-300 leading-relaxed whitespace-pre-line">
-                    {chatResponse.content || (
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                          <div className="bg-fab-surface border border-fab-border p-3 rounded-lg">
-                            <span className="text-[10px] uppercase font-bold text-slate-400">Verdict</span>
-                            <div className="mt-1 font-mono font-bold text-fab-crimson flex items-center gap-1.5">
-                              <ShieldAlert className="w-4 h-4" /> BLOCKED ({chatResponse.conflict_id})
-                            </div>
-                          </div>
-                          <div className="bg-fab-surface border border-fab-border p-3 rounded-lg">
-                            <span className="text-[10px] uppercase font-bold text-slate-400">Inherent Exposure</span>
-                            <div className="mt-1 font-mono text-xl text-fab-crimson font-bold">{chatResponse.inherent_score}</div>
-                          </div>
-                          <div className="bg-fab-surface border border-fab-border p-3 rounded-lg">
-                            <span className="text-[10px] uppercase font-bold text-slate-400">Residual Score</span>
-                            <div className="mt-1 font-mono text-xl text-fab-emerald font-bold">{chatResponse.residual_score}</div>
-                          </div>
-                        </div>
-                        <div className="text-xs text-slate-300 bg-fab-surface p-3 rounded-lg border border-fab-border">
-                          <span className="font-bold text-fab-amber block mb-1">MANDATORY REMEDIATION DIRECTIVE:</span>
-                          {chatResponse.remediation}
-                        </div>
-                      </div>
+                  {/* Clean Formatted Body */}
+                  <div className="bg-fab-obsidian/90 border border-fab-border rounded-lg p-4 sm:p-5">
+                    {chatResponse.title && (
+                      <h3 className="text-sm font-bold text-fab-gold font-mono uppercase tracking-wider mb-3">
+                        {chatResponse.title}
+                      </h3>
                     )}
+                    <FormattedMessage text={chatResponse.content} />
                   </div>
                 </div>
               )}
