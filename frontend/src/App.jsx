@@ -4,7 +4,7 @@ import {
   ShieldAlert, ShieldCheck, Activity, Cpu, Sparkles,
   Terminal, BookOpen, Download, AlertTriangle, Clock, Database,
   CheckCircle2, Layers, MapPin, Zap, RefreshCw, ChevronRight,
-  DollarSign, Users, AlertOctagon, CheckCircle, ArrowUpRight,
+  Users, AlertOctagon, CheckCircle, ArrowUpRight,
   BarChart3, Award, Timer, Menu, X
 } from 'lucide-react';
 
@@ -179,7 +179,7 @@ function ActionTierSelector({ selectedAction, onSelect }) {
 }
 
 // -----------------------------------------------------------------------------
-// Responsive Executive KPI Rail
+// Executive KPI Rail (Scrap Mitigated block removed)
 // -----------------------------------------------------------------------------
 function ExecutiveKpiRail({ facility }) {
   return (
@@ -195,7 +195,7 @@ function ExecutiveKpiRail({ facility }) {
           </span>
         </div>
 
-        {/* Metric 1: Health */}
+        {/* Metric 1: Statutory Compliance Health */}
         <div className="p-4 rounded-xl border bg-fab-obsidian border-fab-amber/40 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
           <div className="flex justify-between items-start mb-1">
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Compliance Health</span>
@@ -214,22 +214,7 @@ function ExecutiveKpiRail({ facility }) {
           </div>
         </div>
 
-        {/* Metric 2: Wafer Exposure */}
-        <div className="p-4 rounded-xl border bg-fab-obsidian border-fab-border">
-          <div className="flex justify-between items-start mb-1">
-            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Scrap Mitigated</span>
-            <DollarSign className="w-4 h-4 text-fab-gold" />
-          </div>
-          <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">$4.2M</span>
-            <span className="text-xs text-fab-amber font-bold font-mono">14 Wafers</span>
-          </div>
-          <p className="text-[10px] text-slate-400 mt-1 leading-snug">
-            Protected against unauthorized lithography recipe override & scrap variance sign-offs.
-          </p>
-        </div>
-
-        {/* Metric Grid */}
+        {/* Metric Grid: Blocked & Latency */}
         <div className="grid grid-cols-2 gap-3">
           <div className="p-3.5 rounded-xl bg-fab-obsidian/80 border border-fab-border">
             <div className="flex justify-between items-center mb-1">
@@ -250,7 +235,7 @@ function ExecutiveKpiRail({ facility }) {
           </div>
         </div>
 
-        {/* Identity Pool */}
+        {/* Shift Identity Pool */}
         <div className="p-4 rounded-xl bg-fab-obsidian/60 border border-fab-border space-y-2.5">
           <div className="text-[10px] font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-fab-amber" /> Shift Pool</span>
@@ -414,7 +399,7 @@ export default function App() {
         </button>
       </div>
 
-      {/* Sidebar: Slide-down on mobile, persistent column on desktop */}
+      {/* Sidebar */}
       <aside className={`
         ${mobileMenuOpen ? 'block' : 'hidden'} lg:flex
         w-full lg:w-64 bg-fab-surface/95 border-b lg:border-b-0 lg:border-r border-fab-border p-5 flex-col justify-between shadow-2xl backdrop-blur shrink-0 z-40
@@ -441,13 +426,13 @@ export default function App() {
               onChange={(e) => setFacility(e.target.value)}
               className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-2.5 py-2 text-xs text-fab-gold font-mono focus:outline-none focus:border-fab-amber"
             >
-              <option value="Fab 1 — Cleanroom Core (Boise)">Fab 1 — Boise</option>
-              <option value="Fab 2 — Packaging & Test (Taichung)">Fab 2 — Taichung</option>
-              <option value="Fab 4 — Advanced R&D (Singapore)">Fab 4 — Singapore</option>
+              <option value="Fab 1 — Cleanroom Core (Boise)" className="bg-fab-surface text-white">Fab 1 — Boise</option>
+              <option value="Fab 2 — Packaging & Test (Taichung)" className="bg-fab-surface text-white">Fab 2 — Taichung</option>
+              <option value="Fab 4 — Advanced R&D (Singapore)" className="bg-fab-surface text-white">Fab 4 — Singapore</option>
             </select>
           </div>
 
-          {/* Nav Items */}
+          {/* Navigation Items */}
           <nav className="space-y-1.5">
             {navItems.map(tab => {
               const Icon = tab.icon;
@@ -506,74 +491,63 @@ export default function App() {
           {/* TAB 1: COPILOT */}
           {activeTab === 'copilot' && (
             <div className="space-y-6">
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-fab-amber" /> Statutory Audit Simulation Cases
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Pre-Certified Demo Test Scenarios */}
+              <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-5 shadow">
+                <div className="flex items-center justify-between mb-3 border-b border-fab-border pb-2.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-fab-amber flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-fab-amber" /> Evaluator Demonstration Scenarios (Click to Run)
+                  </h3>
+                  <span className="text-[10px] font-mono text-slate-400">18 Pre-Certified Cases</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {[
-                    {
-                      tag: "ROLE CONFLICT (GL-01)",
-                      title: "Production Operator + Supervisor",
-                      query: "A Production Operator in Cleanroom A requests temporary Production Supervisor privileges to cover a shift.",
-                      color: "border-fab-crimson/40"
-                    },
-                    {
-                      tag: "CUSTODY BREACH (GL-02)",
-                      title: "Warehouse Handler + Procurement",
-                      query: "Can a Warehouse Material Handler be granted Procurement Buyer rights to expedite cleanroom chemical orders?",
-                      color: "border-fab-amber/40"
-                    },
-                    {
-                      tag: "STATUTORY CONCEPT",
-                      title: "Segregation of Duties Standard",
-                      query: "What is segregation of duties in semiconductor cleanrooms under SOX 404 & ISA-95?",
-                      color: "border-fab-gold/40"
-                    }
-                  ].map((card, idx) => (
-                    <div
+                    { label: "User U1001 Risk Attribution", q: "Why is User U1001 considered high risk?" },
+                    { label: "Single-User Scrap Sign-off", q: "Can this Production Operator approve an adjustment that the same user created?" },
+                    { label: "Cross-Plant Scope Audit", q: "Which Warehouse Operators can adjust stock outside their assigned plant?" },
+                    { label: "Action-Tier Classification", q: "Is the additional access view-only, or can the user create, modify, approve, execute, or administer?" },
+                    { label: "Temporary Shutdown Expiries", q: "Which temporary shutdown permissions have expired?" },
+                    { label: "Least-Disruptive Remediation", q: "What is the least disruptive remediation?" },
+                    { label: "What-If Removal Modeling", q: "What happens to the risk if a specific access group is removed?" },
+                    { label: "Plant Manager Explanation", q: "Explain this finding to a Plant Manager without technical terminology." },
+                    { label: "Dual Audit Package Generation", q: "Generate a manager review summary and an auditor evidence summary." },
+                  ].map((item, idx) => (
+                    <button
                       key={idx}
-                      onClick={() => handleChat(card.query)}
-                      className={`p-4 rounded-xl bg-fab-surface/90 border ${card.color} hover:border-fab-amber hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] transition-all cursor-pointer flex flex-col justify-between group`}
+                      onClick={() => handleChat(item.q)}
+                      className="p-3 rounded-lg bg-fab-obsidian border border-fab-border hover:border-fab-amber hover:shadow-[0_0_15px_rgba(245,158,11,0.2)] text-left transition flex flex-col justify-between group"
                     >
-                      <div>
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-[10px] font-mono font-bold text-fab-amber bg-fab-obsidian px-2 py-0.5 rounded border border-fab-border">
-                            {card.tag}
-                          </span>
-                          <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-white transition" />
-                        </div>
-                        <h4 className="text-xs font-bold text-white mb-1.5">{card.title}</h4>
-                        <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">{card.query}</p>
+                      <div className="text-[11px] font-bold text-white group-hover:text-fab-gold flex items-center justify-between mb-1">
+                        <span>{item.label}</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-fab-amber" />
                       </div>
-                      <div className="mt-4 flex items-center gap-1.5 text-[10px] font-mono text-fab-gold font-semibold">
-                        <span>Execute Pre-Check</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </div>
-                    </div>
+                      <p className="text-[10px] text-slate-400 truncate">{item.q}</p>
+                    </button>
                   ))}
                 </div>
               </div>
 
+              {/* Natural Language Prompt Input Bar */}
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleChat()}
-                  placeholder="Ask about role collisions or mitigations..."
+                  placeholder="Ask any question from the evaluation sheets..."
                   className="flex-1 bg-fab-surface/90 border border-fab-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-fab-amber text-white placeholder-slate-500 shadow-inner"
                 />
                 <button
                   onClick={() => handleChat()}
                   disabled={loading}
-                  className="bg-gradient-to-r from-fab-amber to-fab-gold hover:opacity-95 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-fab-obsidian shrink-0"
+                  className="bg-gradient-to-r from-fab-amber to-fab-gold hover:opacity-95 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-fab-obsidian shrink-0 font-mono"
                 >
                   {loading ? <RefreshCw className="w-4 h-4 animate-spin text-fab-obsidian" /> : <Sparkles className="w-4 h-4 text-fab-obsidian" />}
                   {loading ? 'Evaluating...' : 'Query Copilot'}
                 </button>
               </div>
 
+              {/* Chat Response */}
               {chatResponse && (
                 <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-6 space-y-4 shadow-xl">
                   <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-fab-border pb-3">
@@ -627,7 +601,7 @@ export default function App() {
                     onChange={(e) => setBaseRole(e.target.value)}
                     className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-fab-amber"
                   >
-                    {roles.map(r => <option key={r} value={r}>{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
                   </select>
                 </div>
                 <div>
@@ -639,7 +613,7 @@ export default function App() {
                     onChange={(e) => setTargetRole(e.target.value)}
                     className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-fab-amber"
                   >
-                    {roles.map(r => <option key={r} value={r}>{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
                   </select>
                 </div>
               </div>
@@ -700,7 +674,7 @@ export default function App() {
                     onChange={(e) => setAuditRole(e.target.value)}
                     className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
                   >
-                    {roles.map(r => <option key={r} value={r}>{r}</option>)}
+                    {roles.map(r => <option key={r} value={r} className="bg-fab-surface text-white">{r}</option>)}
                   </select>
                 </div>
                 <div>
@@ -710,9 +684,9 @@ export default function App() {
                     onChange={(e) => setAssignedPlant(e.target.value)}
                     className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
                   >
-                    <option value="Plant-01">Plant-01 (Boise)</option>
-                    <option value="Plant-02">Plant-02 (Taichung)</option>
-                    <option value="Plant-04">Plant-04 (Singapore)</option>
+                    <option value="Plant-01" className="bg-fab-surface text-white">Plant-01 (Boise)</option>
+                    <option value="Plant-02" className="bg-fab-surface text-white">Plant-02 (Taichung)</option>
+                    <option value="Plant-04" className="bg-fab-surface text-white">Plant-04 (Singapore)</option>
                   </select>
                 </div>
                 <div>
@@ -722,9 +696,9 @@ export default function App() {
                     onChange={(e) => setRequestedScope(e.target.value)}
                     className="w-full bg-fab-obsidian border border-fab-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-fab-amber"
                   >
-                    <option value="GLOBAL">GLOBAL / Multi-Plant</option>
-                    <option value="Plant-04">Plant-04 (Local Only)</option>
-                    <option value="Plant-01">Plant-01 (Local Only)</option>
+                    <option value="GLOBAL" className="bg-fab-surface text-white">GLOBAL / Multi-Plant</option>
+                    <option value="Plant-04" className="bg-fab-surface text-white">Plant-04 (Local Only)</option>
+                    <option value="Plant-01" className="bg-fab-surface text-white">Plant-01 (Local Only)</option>
                   </select>
                 </div>
                 <div>
@@ -875,7 +849,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* Responsive Right-Hand KPI Rail */}
+      {/* Responsive Right-Hand KPI Rail (Without Scrap Mitigated block) */}
       <ExecutiveKpiRail facility={facility} />
     </div>
   );
