@@ -179,7 +179,7 @@ function ActionTierSelector({ selectedAction, onSelect }) {
 }
 
 // -----------------------------------------------------------------------------
-// Executive KPI Rail (Scrap Mitigated block removed)
+// Responsive Executive KPI Rail
 // -----------------------------------------------------------------------------
 function ExecutiveKpiRail({ facility }) {
   return (
@@ -389,7 +389,7 @@ export default function App() {
           <div className="bg-gradient-to-tr from-fab-amber to-fab-gold p-2 rounded-lg">
             <Cpu className="text-fab-obsidian h-5 w-5 stroke-[2.5]" />
           </div>
-          <span className="font-extrabold text-sm tracking-wider uppercase text-white font-mono">MICRON SENTINEL</span>
+          <span className="font-extrabold text-sm tracking-wider uppercase text-white font-mono">AURA</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -468,36 +468,29 @@ export default function App() {
 
       {/* Main Operations Canvas */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="flex flex-col sm:flex-row justify-between sm:items-center bg-fab-surface/90 border-b border-fab-border px-4 sm:px-8 py-4 gap-2 backdrop-blur">
-          <div>
-            <h2 className="text-xs sm:text-sm font-extrabold text-white tracking-wider uppercase flex items-center gap-2">
-              Statutory Risk Intelligence
-              <span className="text-[10px] bg-fab-amber/15 border border-fab-amber px-2 py-0.5 rounded font-mono text-fab-amber">
-                DETERMINISTIC
-              </span>
-            </h2>
-            <p className="text-[11px] sm:text-xs text-slate-400 font-mono mt-0.5">
-              Active Scope: <span className="text-white font-semibold">{facility}</span>
-            </p>
-          </div>
-          <div className="self-start sm:self-auto">
-            <span className="font-mono text-[10px] sm:text-xs text-fab-emerald bg-fab-emerald/10 border border-fab-emerald/40 px-3 py-1 rounded-full flex items-center gap-1.5 font-bold">
-              <CheckCircle2 className="w-3.5 h-3.5" /> 100% PARITY
-            </span>
-          </div>
+        {/* Updated Header: Big AURA with subtitle, badges removed */}
+        <header className="bg-fab-surface/90 border-b border-fab-border px-4 sm:px-8 py-5 text-center backdrop-blur">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-widest font-mono">
+            AURA
+          </h1>
+          <p className="text-xs sm:text-sm text-fab-amber font-mono tracking-wider font-semibold mt-1">
+            Agentic User Risk Analysis
+          </p>
+          <p className="text-[11px] text-slate-400 font-mono mt-1">
+            Active Scope: <span className="text-white font-semibold">{facility}</span>
+          </p>
         </header>
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden">
           {/* TAB 1: COPILOT */}
           {activeTab === 'copilot' && (
             <div className="space-y-6">
-              {/* Pre-Certified Demo Test Scenarios */}
+              {/* Demonstration Scenarios (18 Pre-certified label removed) */}
               <div className="bg-fab-surface/90 border border-fab-border rounded-xl p-4 sm:p-5 shadow">
-                <div className="flex items-center justify-between mb-3 border-b border-fab-border pb-2.5">
+                <div className="mb-3 border-b border-fab-border pb-2.5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-fab-amber flex items-center gap-2">
                     <Zap className="w-4 h-4 text-fab-amber" /> Evaluator Demonstration Scenarios (Click to Run)
                   </h3>
-                  <span className="text-[10px] font-mono text-slate-400">18 Pre-Certified Cases</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -849,7 +842,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* Responsive Right-Hand KPI Rail (Without Scrap Mitigated block) */}
+      {/* Responsive Right-Hand KPI Rail */}
       <ExecutiveKpiRail facility={facility} />
     </div>
   );
